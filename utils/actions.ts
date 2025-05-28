@@ -1,15 +1,16 @@
 "use server";
 import { readFile, writeFile } from "fs/promises";
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
+// import { redirect } from "next/navigation";
 
 type User = {
   id: string;
   firstName: string;
   lastName: string;
 };
-export const createUser = async (formData: FormData) => {
+export const createUser = async (prevState: any, formData: FormData) => {
   "use server";
+  await new Promise((resolve) => setTimeout(resolve, 3000));
   const firstName = formData.get("firstName") as string;
   const lastName = formData.get("lastName") as string;
   //   const rawData = Object.fromEntries(formData);
@@ -18,10 +19,12 @@ export const createUser = async (formData: FormData) => {
   console.log({ firstName, lastName });
   try {
     await saveUser(newUser);
+    revalidatePath("/actions");
+    return "user created successfully";
   } catch (error) {
     console.log(error);
+    return "Failed to create user";
   }
-  revalidatePath("/actions");
   //redirect("/")
 };
 
