@@ -1,8 +1,15 @@
 import dataImage from "@/images/data.jpg";
 import Image from "next/image";
+import { FC } from "react";
 
+type PageProps = {
+  params: {
+    id: string;
+  };
+};
 const url = "https://www.course-api.com/images/tours/tour-1.jpeg";
-const page = ({ params }: { params: { id: string } }) => {
+
+const PageTour = ({ params }: PageProps) => {
   return (
     <>
       <h1 className="text-4xl">ID: {params.id}</h1>
@@ -33,4 +40,4 @@ const page = ({ params }: { params: { id: string } }) => {
     </>
   );
 };
-export default page;
+export default PageTour;
